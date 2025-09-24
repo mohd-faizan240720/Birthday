@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday - September 25th</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000; font-family:'Arial',sans-serif; overflow-x:hidden; color:white; }
+
+/* Neon Text */
+.neon-container { display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; text-align:center; padding:20px; }
+.neon-text { font-size:clamp(1.5rem,4vw,3rem); font-weight:bold; text-transform:uppercase; letter-spacing:3px; line-height:1.4; color:#ff6b9d; text-shadow:0 0 5px #ff6b9d,0 0 10px #ff6b9d,0 0 15px #ff6b9d,0 0 20px #ff6b9d,0 0 35px #ff6b9d,0 0 40px #ff6b9d; animation:neonFlicker 2s infinite alternate; margin-bottom:2rem; }
+@keyframes neonFlicker { 0%,18%,22%,25%,53%,57%,100% { text-shadow:0 0 5px #ff6b9d,0 0 10px #ff6b9d,0 0 15px #ff6b9d,0 0 20px #ff6b9d,0 0 35px #ff6b9d,0 0 40px #ff6b9d; } 20%,24%,55% { text-shadow:none; } }
+
+.wish-button { background:linear-gradient(45deg,#4ecdc4,#44a08d); border:none; padding:15px 30px; font-size:1.2rem; font-weight:bold; color:white; border-radius:50px; cursor:pointer; text-transform:uppercase; letter-spacing:2px; box-shadow:0 0 20px rgba(78,205,196,0.5),0 5px 15px rgba(0,0,0,0.3); transition:all 0.3s ease; position:relative; overflow:hidden; }
+.wish-button:hover { transform:translateY(-3px); box-shadow:0 0 30px rgba(78,205,196,0.8),0 10px 25px rgba(0,0,0,0.4); }
+.wish-button::before { content:''; position:absolute; top:0; left:-100%; width:100%; height:100%; background:linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent); transition:left 0.5s; }
+.wish-button:hover::before { left:100%; }
+
+/* Cake Section */
+.cake-section { display:none; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; text-align:center; padding:20px; }
+.cake-container { position:relative; cursor:pointer; transition:transform 0.3s ease; }
+.cake-container:hover { transform:scale(1.05); }
+
+.cake {
+    width:300px;
+    height:220px;
+    background: linear-gradient(to bottom, #f5c6aa 0%, #e28b70 100%);
+    border-radius: 20px 20px 40px 40px;
+    position:relative;
+    margin:0 auto;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 -5px 10px rgba(0,0,0,0.2);
+    flex-direction:column;
+    font-weight:bold;
+    color:white;
+    font-size:1.2rem;
+    text-align:center;
+    padding:10px;
+}
+
+.cake::before {
+    content:''; position:absolute; top:-25px; left:50%; transform:translateX(-50%); width:280px; height:40px;
+    background: linear-gradient(to bottom, #fff4e6 0%, #ffd1ff 100%); border-radius:20px;
+    box-shadow:0 5px 15px rgba(250,208,196,0.3);
+}
+
+.cake-message { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:1.2rem; font-weight:bold; text-shadow:0 0 5px #4ecdc4,0 0 10px #4ecdc4,0 0 20px #4ecdc4; }
+
+.candles { position:absolute; top:-50px; left:50%; transform:translateX(-50%); display:flex; gap:20px; }
+.candle { width:8px; height:35px; background:#ffeb3b; border-radius:4px; position:relative; }
+.flame { position:absolute; top:-10px; left:50%; transform:translateX(-50%); width:6px; height:8px; background:radial-gradient(circle,#ff6b35,#f7931e); border-radius:50% 50% 50% 50%/60% 60% 40% 40%; animation:flicker 1s infinite alternate; }
+@keyframes flicker { 0% { transform:translateX(-50%) rotate(-2deg) scale(1); } 100% { transform:translateX(-50%) rotate(2deg) scale(1.1); } }
+
+.cake-pieces { display:none; position:absolute; top:0; left:0; width:100%; height:100%; }
+.piece { position:absolute; width:100px; height:100px; background:linear-gradient(45deg,#f5c6aa,#e28b70); border-radius:10px; transition:all 1s ease; }
+.piece1 { top:0; left:0; transform:rotate(0deg); }
+.piece2 { top:0; right:0; transform:rotate(0deg); }
+.piece3 { bottom:0; left:0; transform:rotate(0deg); }
+.piece4 { bottom:0; right:0; transform:rotate(0deg); }
+.piece.animate { opacity:0; }
+.piece1.animate { transform:translate(-200px,-200px) rotate(180deg); }
+.piece2.animate { transform:translate(200px,-200px) rotate(-180deg); }
+.piece3.animate { transform:translate(-200px,200px) rotate(90deg); }
+.piece4.animate { transform:translate(200px,200px) rotate(-90deg); }
+
+/* Message Section */
+.message-section { display:none; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; padding:40px 20px; text-align:center; }
+.typewriter-container { max-width:800px; margin:0 auto; background: rgba(0,0,0,0.3); padding:20px; border-radius:20px; border: 2px solid #4ecdc4; box-shadow:0 0 20px #4ecdc4; animation: neon-border 2s linear infinite; }
+.typewriter-text { font-size:clamp(1.2rem,3vw,1.8rem); line-height:1.6; color:#4ecdc4; text-shadow:0 0 10px rgba(78,205,196,0.3); border-right:3px solid #4ecdc4; white-space:nowrap; overflow:hidden; animation:typing 4s steps(40,end), blink-caret 0.75s step-end infinite; }
+.continue-text { display:none; margin-top:2rem; font-size:1.1rem; color:#ff6b9d; text-shadow:0 0 10px rgba(255,107,157,0.3); cursor:pointer; animation:pulse 2s infinite; }
+
+@keyframes typing { from { width:0; } to { width:100%; } }
+@keyframes blink-caret { from,to { border-color:transparent; } 50% { border-color:#4ecdc4; } }
+@keyframes pulse { 0% { opacity:0.7; } 50% { opacity:1; } 100% { opacity:0.7; } }
+@keyframes neon-border { 0% { box-shadow:0 0 10px #4ecdc4; } 50% { box-shadow:0 0 25px #4ecdc4; } 100% { box-shadow:0 0 10px #4ecdc4; } }
+
+/* Reply Section */
+.reply-section { display:none; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; padding:40px 20px; }
+.reply-form { background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius:20px; padding:40px; max-width:600px; width:100%; border:1px solid rgba(255,255,255,0.2); box-shadow:0 20px 40px rgba(0,0,0,0.3); }
+.reply-form h2 { color:#ff6b9d; text-align:center; margin-bottom:2rem; font-size:2rem; text-shadow:0 0 10px rgba(255,107,157,0.3); }
+.form-group { margin-bottom:1.5rem; }
+.form-group label { display:block; margin-bottom:0.5rem; color:#4ecdc4; font-weight:bold; }
+.form-group input,.form-group textarea { width:100%; padding:12px; border:2px solid rgba(78,205,196,0.3); border-radius:10px; background: rgba(0,0,0,0.5); color:white; font-size:1rem; transition:border-color 0.3s ease; }
+.form-group input:focus,.form-group textarea:focus { outline:none; border-color:#4ecdc4; box-shadow:0 0 10px rgba(78,205,196,0.3); }
+.form-group textarea { height:120px; resize:vertical; }
+.rating-container { display:flex; justify-content:center; gap:10px; margin:1rem 0; }
+.star { font-size:2rem; color:#666; cursor:pointer; transition:color 0.2s ease; }
+.star:hover,.star.active { color:#ffeb3b; text-shadow:0 0 10px rgba(255,235,59,0.5); }
+.submit-btn { background: linear-gradient(45deg,#ff6b9d,#4ecdc4); border:none; padding:15px 40px; font-size:1.1rem; font-weight:bold; color:white; border-radius:50px; cursor:pointer; width:100%; text-transform:uppercase; letter-spacing:1px; transition: all 0.3s ease; box-shadow:0 5px 15px rgba(255,107,157,0.3); }
+.submit-btn:hover { transform:translateY(-2px); box-shadow:0 10px 25px rgba(255,107,157,0.4); }
+.success-message { display:none; text-align:center; color:#4ecdc4; font-size:1.5rem; margin-top:2rem; text-shadow:0 0 10px rgba(78,205,196,0.5); }
+
+/* Particles */
+.particles { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:-1; }
+.particle { position:absolute; width:4px; height:4px; background:#4ecdc4; border-radius:50%; animation:float 6s infinite linear; }
+@keyframes float { 0% { transform:translateY(100vh) rotate(0deg); opacity:0; } 10% { opacity:1; } 90% { opacity:1; } 100% { transform:translateY(-100px) rotate(360deg); opacity:0; } }
+
+@media(max-width:768px){.cake{width:250px;height:180px}.cake::before{width:230px}.reply-form{padding:20px;margin:20px}}
+</style>
+</head>
+<body>
+<div class="particles" id="particles"></div>
+
+<section class="neon-container" id="mainSection">
+<div class="neon-text">
+HAPPIEST BIRTHDAY TO YOU<br>25th Of September Is Your Day<br>I wish you a Many Many<br>Happy returns Of The Day<br>Please wear a headphone for better experience 🎧
+</div>
+<button class="wish-button" onclick="showCake()">Some Wishing Is Still Left...</button>
+</section>
+
+<section class="cake-section" id="cakeSection">
+<div class="cake-container" onclick="cutCake()">
+<div class="cake">
+<div class="candles">
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+<div class="candle"><div class="flame"></div></div>
+</div>
+<div class="cake-message">Happy Birthday Dost 🎂</div>
+<div class="cake-pieces" id="cakePieces">
+<div class="piece piece1"></div>
+<div class="piece piece2"></div>
+<div class="piece piece3"></div>
+<div class="piece piece4"></div>
+</div>
+</div>
+</div>
+<p style="margin-top:2rem;color:#4ecdc4;font-size:1.2rem;">Click the cake to cut a wish! 🎂</p>
+</section>
+
+<section class="message-section" id="messageSection">
+<div class="typewriter-container">
+<div class="typewriter-text" id="typewriterText"></div>
+<div class="continue-text" id="continueText" onclick="showReplyForm()">Click one time more here, for your reply and rate my idea! ✨</div>
+</div>
+</section>
+
+<section class="reply-section" id="replySection">
+<form class="reply-form" id="replyForm" onsubmit="sendReply(event)">
+<h2>Your Reply & Rating</h2>
+<div class="form-group">
+<label for="name">Your Name:</label>
+<input type="text" id="name" name="name" required>
+</div>
+<div class="form-group">
+<label for="message">Your Message:</label>
+<textarea id="message" name="message" placeholder="Write your reply here..." required></textarea>
+</div>
+<div class="form-group">
+<label>Rate My Birthday Idea:</label>
+<div class="rating-container">
+<span class="star" data-rating="1">⭐</span>
+<span class="star" data-rating="2">⭐</span>
+<span class="star" data-rating="3">⭐</span>
+<span class="star" data-rating="4">⭐</span>
+<span class="star" data-rating="5">⭐</span>
+</div>
+</div>
+<button type="submit" class="submit-btn">Send Me Your Reply</button>
+<div class="success-message" id="successMessage" style="display:none;"></div>
+</form>
+</section>
+
+<audio id="birthdayMusic" autoplay loop>
+<source src="birthday-song.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+function createParticles(){
+    const particlesContainer=document.getElementById('particles');
+    for(let i=0;i<50;i++){
+        const particle=document.createElement('div');
+        particle.className='particle';
+        particle.style.left=Math.random()*100+'%';
+        particle.style.animationDelay=Math.random()*6+'s';
+        particle.style.animationDuration=(Math.random()*3+3)+'s';
+        particlesContainer.appendChild(particle);
+    }
+}
+function showCake(){
+    document.getElementById('mainSection').style.display='none';
+    document.getElementById('cakeSection').style.display='flex';
+    const music=document.getElementById('birthdayMusic');
+    music.play().catch(e=>console.log('Music autoplay prevented'));
+}
+function cutCake(){
+    const cakePieces=document.getElementById('cakePieces');
+    const pieces=cakePieces.querySelectorAll('.piece');
+    cakePieces.style.display='block';
+    pieces.forEach(piece=>{ piece.classList.add('animate'); });
+    setTimeout(()=>{ document.getElementById('cakeSection').style.display='none'; showMessage(); },1500);
+}
+function showMessage(){
+    document.getElementById('messageSection').style.display='flex';
+    const message="My dearest friend, on this special day of yours, I wanted to create something magical just for you. Every moment we've shared has been precious, and I hope this little surprise brings a smile to your face. You deserve all the happiness in the world, and I'm so grateful to have you in my life. May this new year of your life be filled with endless joy, love, and beautiful memories. Happy Birthday! 🎉💕";
+    const typewriterElement=document.getElementById('typewriterText');
+    const continueElement=document.getElementById('continueText');
+    let i=0;
+    typewriterElement.style.whiteSpace='normal';
+    typewriterElement.style.borderRight='none';
+    function typeWriter(){
+        if(i<message.length){ typewriterElement.innerHTML+=message.charAt(i); i++; setTimeout(typeWriter,50); }
+        else{ setTimeout(()=>{ continueElement.style.display='block'; },1000); }
+    }
+    typeWriter();
+}
+function showReplyForm(){ document.getElementById('messageSection').style.display='none'; document.getElementById('replySection').style.display='flex'; }
+
+let selectedRating=0;
+document.querySelectorAll('.star').forEach(star=>{
+    star.addEventListener('click',function(){ selectedRating=parseInt(this.dataset.rating); updateStars(); });
+    star.addEventListener('mouseover',function(){ highlightStars(parseInt(this.dataset.rating)); });
+});
+document.querySelector('.rating-container').addEventListener('mouseleave',function(){ updateStars(); });
+function highlightStars(rating){ document.querySelectorAll('.star').forEach((star,index)=>{ if(index<rating){ star.classList.add('active'); }else{ star.classList.remove('active'); } }); }
+function updateStars(){ highlightStars(selectedRating); }
+
+function sendReply(event){
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    formData.append('rating', selectedRating);
+
+    fetch('send_email.php', { method:'POST', body: formData })
+    .then(response => response.json())
+    .then(data => {
+        if(data.status === "success"){
+            document.getElementById('successMessage').style.display='block';
+            document.getElementById('successMessage').innerText='Thank you! Your response has been sent.';
+            event.target.style.display='none';
+        } else {
+            alert('Oops! Something went wrong. Try again.');
+        }
+    })
+    .catch(err => { console.error(err); alert('Error sending response.'); });
+}
+
+window.addEventListener('load',function(){ createParticles(); });
+</script>
+</body>
+</html>
